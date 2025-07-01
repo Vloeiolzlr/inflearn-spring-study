@@ -2,13 +2,13 @@ package hello.hello_spring.service;
 
 import hello.hello_spring.domain.Member;
 import hello.hello_spring.repository.MemberRepository;
-import hello.hello_spring.repository.MemoryMemberRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 
+@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
 
@@ -17,10 +17,9 @@ public class MemberService {
     }
 
     public Long join(Member member) {
-        // 중복 이름 불가
         validateDuplicateMember(member);
         memberRepository.save(member);
-        return member.getId();
+        return member.getId();  
     }
 
     private void validateDuplicateMember(Member member) {
